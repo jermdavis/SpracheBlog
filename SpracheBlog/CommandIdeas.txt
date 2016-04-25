@@ -1,0 +1,3 @@
+﻿create <template:id/path> under <location:id/path> with <property=value>[,etc]
+move <item:id/path> to <location:id/path>
+delete <item:id/path>
