@@ -15,6 +15,9 @@ namespace SpracheBlog
         public static Parser<string> ItemName =
             Parse.CharExcept(InvalidNameCharacters).Many().Text().Token();
 
+        public static Parser<string> PathOrID =
+            Parse.CharExcept(' ').Many().Text().Token();
+
         public static Parser<Field> Field =
             from name in Parse.CharExcept(new char[] { '=', ' ' }).Many().Text()
             from equalSign in Parse.Char('=').Token()
@@ -26,11 +29,11 @@ namespace SpracheBlog
         // create <template:id/path> named <name> under [<location:id/path> with <property="value">[,etc]]
         public static Parser<Command> CreateCommand =
             from cmd in Parse.IgnoreCase("create").Token()
-            from template in Parse.AnyChar.Until(Parse.WhiteSpace).Text().Token()
+            from template in PathOrID
             from named in Parse.IgnoreCase("named").Token()
             from itemName in ItemName.Token()
             from under in Parse.IgnoreCase("under").Token()
-            from location in Parse.CharExcept(' ').Many().Text()
+            from location in PathOrID
             from fieldValues in (
                 from with in Parse.IgnoreCase("with").Token()
                 from fields in (
@@ -44,15 +47,15 @@ namespace SpracheBlog
         // move <item:id/path> to <location:id/path>
         public static Parser<Command> MoveCommand =
             from cmd in Parse.IgnoreCase("move").Token()
-            from item in Parse.AnyChar.Until(Parse.WhiteSpace).Text().Token()
+            from item in PathOrID
             from to in Parse.IgnoreCase("to").Token()
-            from newLocation in Parse.AnyChar.Many().Text()
+            from newLocation in PathOrID
             select new MoveCommand() { Item = item, NewLocation = newLocation };
 
         //delete <item:id/path>
         public static Parser<Command> DeleteCommand =
             from cmd in Parse.IgnoreCase("delete").Token()
-            from item in Parse.AnyChar.Many().Text()
+            from item in PathOrID
             select new DeleteCommand() { Item = item };
 
         public static Parser<Command> Any =

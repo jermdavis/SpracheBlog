@@ -11,6 +11,24 @@ namespace SpracheBlog.Tests
     public class CommandParserTests
     {
         [TestMethod]
+        public void PathOrIDParsesPath()
+        {
+            var result = Command.PathOrID.TryParse(" \\test\\path  ");
+
+            Assert.IsTrue(result.WasSuccessful, result.Message);
+            Assert.AreEqual("\\test\\path", result.Value);
+        }
+
+        [TestMethod]
+        public void PathOrIDParsesID()
+        {
+            var result = Command.PathOrID.TryParse("{1234}");
+
+            Assert.IsTrue(result.WasSuccessful, result.Message);
+            Assert.AreEqual("{1234}", result.Value);
+        }
+
+        [TestMethod]
         public void ValidNameParses()
         {
             var result = Command.ItemName.TryParse(" Hello ");
