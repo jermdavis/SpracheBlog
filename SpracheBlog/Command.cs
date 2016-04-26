@@ -10,6 +10,11 @@ namespace SpracheBlog
 
     public class Command
     {
+        public static IEnumerable<char> InvalidNameCharacters = new List<char> { '\\', '/', ':', '?', '"', '<', '>', '|', '[', ']', ' ', '!' };
+
+        public static Parser<string> ItemName =
+            Parse.CharExcept(InvalidNameCharacters).Many().Text().Token();
+
         public static Parser<Field> Field =
             from name in Parse.CharExcept(new char[] { '=', ' ' }).Many().Text()
             from equalSign in Parse.Char('=').Token()
@@ -18,18 +23,23 @@ namespace SpracheBlog
             from closeQuote in Parse.Char('"') 
             select new Field() { Name = name, Value = value };
 
-        // create <template:id/path> under <location:id/path> with <property="value">[,etc]
+        // create <template:id/path> named <name> under [<location:id/path> with <property="value">[,etc]]
         public static Parser<Command> CreateCommand =
             from cmd in Parse.IgnoreCase("create").Token()
             from template in Parse.AnyChar.Until(Parse.WhiteSpace).Text().Token()
+            from named in Parse.IgnoreCase("named").Token()
+            from itemName in ItemName.Token()
             from under in Parse.IgnoreCase("under").Token()
-            from location in Parse.AnyChar.Until(Parse.WhiteSpace).Text().Token()
-            from with in Parse.IgnoreCase("with").Token()
-            from fields in ( 
-                from first in Field
-                from rest in Parse.Char(',').Token().Then(_ => Field).Many()
-                select first.Concatenate(rest) )
-            select new CreateCommand() { Template = template, Location = location, Fields = fields };
+            from location in Parse.CharExcept(' ').Many().Text()
+            from fieldValues in (
+                from with in Parse.IgnoreCase("with").Token()
+                from fields in (
+                    from first in Field
+                    from rest in Parse.Char(',').Token().Then(_ => Field).Many()
+                    select first.Concatenate(rest))
+                select fields
+                ).Optional()
+            select new CreateCommand() { Template = template, Name = itemName, Location = location, Fields = fieldValues.GetOrElse(new List<Field>()) };
 
         // move <item:id/path> to <location:id/path>
         public static Parser<Command> MoveCommand =
