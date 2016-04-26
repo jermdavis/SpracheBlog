@@ -47,8 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionExtensions.cs" />
     <Compile Include="Command.cs" />
+    <Compile Include="CreateCommand.cs" />
+    <Compile Include="DeleteCommand.cs" />
     <Compile Include="FancyCommand.cs" />
+    <Compile Include="Field.cs" />
+    <Compile Include="MoveCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

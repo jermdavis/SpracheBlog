@@ -8,48 +8,17 @@ using Sprache;
 namespace SpracheBlog
 {
 
-    public class Field
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
-
-    public class CreateCommand : Command
-    {
-        public string Template { get; set; }
-        public string Location { get; set; }
-        public IEnumerable<Field> Fields { get; set; }
-    }
-
-    public class MoveCommand : Command
-    {
-        public string Item { get; set; }
-        public string NewLocation { get; set; }
-    }
-
-    public class DeleteCommand : Command
-    {
-        public string Item { get; set; }
-    }
-
     public class Command
     {
         public static Parser<Field> Field =
-            from name in Parse.AnyChar.Until(Parse.Char('=')).Text()
+            from name in Parse.CharExcept(new char[] { '=', ' ' }).Many().Text()
+            from equalSign in Parse.Char('=').Token()
             from openQuote in Parse.Char('"')
-            from value in Parse.AnyChar.Until(Parse.Char('"')).Text()
+            from value in Parse.CharExcept('"').Many().Text()
+            from closeQuote in Parse.Char('"') 
             select new Field() { Name = name, Value = value };
 
-        private static IEnumerable<T> Concatenate<T>(T first, IEnumerable<T> rest)
-        {
-            yield return first;
-            foreach(T item in rest)
-            {
-                yield return item;
-            }
-        }
-
-        // create <template:id/path> under <location:id/path> with <property=value>[,etc]
+        // create <template:id/path> under <location:id/path> with <property="value">[,etc]
         public static Parser<Command> CreateCommand =
             from cmd in Parse.IgnoreCase("create").Token()
             from template in Parse.AnyChar.Until(Parse.WhiteSpace).Text().Token()
@@ -58,8 +27,8 @@ namespace SpracheBlog
             from with in Parse.IgnoreCase("with").Token()
             from fields in ( 
                 from first in Field
-                from rest in Parse.Char(',').Then(_ => Field).Many()
-                select Concatenate(first, rest) )
+                from rest in Parse.Char(',').Token().Then(_ => Field).Many()
+                select first.Concatenate(rest) )
             select new CreateCommand() { Template = template, Location = location, Fields = fields };
 
         // move <item:id/path> to <location:id/path>

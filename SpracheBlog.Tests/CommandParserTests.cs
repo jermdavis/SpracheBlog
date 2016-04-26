@@ -11,11 +11,27 @@ namespace SpracheBlog.Tests
     public class CommandParserTests
     {
         [TestMethod]
-        public void FieldParses()
+        public void ValidFieldParses()
         {
             var result = Command.Field.TryParse("alpha=\"one\"");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
+        }
+
+        [TestMethod]
+        public void ValidFieldWithWhitespaceParses()
+        {
+            var result = Command.Field.TryParse("alpha = \"one\"");
+
+            Assert.IsTrue(result.WasSuccessful, result.Message);
+        }
+
+        [TestMethod]
+        public void FieldWithMissingQuoteFails()
+        {
+            var result = Command.Field.TryParse("alpha=\"one");
+
+            Assert.IsFalse(result.WasSuccessful);
         }
 
         [TestMethod]
