@@ -9,9 +9,9 @@ namespace SpracheBlog
 
     public class CreateCommand : Command
     {
-        public string Template { get; set; }
+        public ItemIdenitfier Template { get; set; }
         public string Name { get; set; }
-        public string Location { get; set; }
+        public ItemIdenitfier Location { get; set; }
         public IEnumerable<Field> Fields { get; set; }
     }
 

@@ -13,10 +13,31 @@ namespace SpracheBlog
         public static IEnumerable<char> InvalidNameCharacters = new List<char> { '\\', '/', ':', '?', '"', '<', '>', '|', '[', ']', ' ', '!' };
 
         public static Parser<string> ItemName =
-            Parse.CharExcept(InvalidNameCharacters).Many().Text().Token();
+            Parse.CharExcept(InvalidNameCharacters).AtLeastOnce().Text().Token();
 
-        public static Parser<string> PathOrID =
-            Parse.CharExcept(' ').Many().Text().Token();
+        public static Parser<ItemIdenitfier> ItemId =
+            from openBrace in Parse.Char('{')
+            from id in Parse.LetterOrDigit.Or(Parse.Char('-')).Repeat(36).Text()
+            from closeBrase in Parse.Char('}')
+            select new ItemIdenitfier() { Path = string.Empty, Id = Guid.Parse(id) };
+
+        public static Parser<string> PathSegment =
+            from slash in Parse.Chars(new char[] { '\\', '/' })
+            from name in ItemName
+            select name;
+
+        public static Parser<ItemIdenitfier> ItemPath =
+            from parts in (
+                from firstSegment in PathSegment
+                from otherSegments in PathSegment.Many()
+                select firstSegment.Concatenate(otherSegments)
+            )
+            from trailingSlash in Parse.Char('\\').Optional()
+            select new ItemIdenitfier() { Id=Guid.Empty, Path = "/" + string.Join("/", parts) };
+
+        public static Parser<ItemIdenitfier> PathOrID =
+            ItemPath
+            .XOr(ItemId).Token();
 
         public static Parser<Field> Field =
             from name in Parse.CharExcept(new char[] { '=', ' ' }).Many().Text()

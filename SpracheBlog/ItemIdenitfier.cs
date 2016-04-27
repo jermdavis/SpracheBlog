@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace SpracheBlog
 {
 
-    public class MoveCommand : Command
+    public class ItemIdenitfier
     {
-        public ItemIdenitfier Item { get; set; }
-        public ItemIdenitfier NewLocation { get; set; }
+        public string Path { get; set; }
+        public Guid Id { get; set; }
     }
 
 }

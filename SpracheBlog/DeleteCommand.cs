@@ -9,7 +9,7 @@ namespace SpracheBlog
 
     public class DeleteCommand : Command
     {
-        public string Item { get; set; }
+        public ItemIdenitfier Item { get; set; }
     }
 
 }
