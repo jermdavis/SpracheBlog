@@ -51,7 +51,6 @@
     <Compile Include="Command.cs" />
     <Compile Include="CreateCommand.cs" />
     <Compile Include="DeleteCommand.cs" />
-    <Compile Include="FancyCommand.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="ItemIdenitfier.cs" />
     <Compile Include="MoveCommand.cs" />
