@@ -35,6 +35,16 @@ namespace SpracheBlog.Tests
 
             Assert.IsFalse(result.WasSuccessful);
         }
+
+        [TestMethod]
+        public void FieldWithQuotedNameParses()
+        {
+            var result = Command.Field.TryParse("\"Display name\"=\"one\"");
+
+            Assert.IsTrue(result.WasSuccessful, result.Message);
+            Assert.AreEqual("Display name", result.Value.Name);
+            Assert.AreEqual("one", result.Value.Value);
+        }
     }
 
 }

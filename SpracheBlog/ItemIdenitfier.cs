@@ -11,6 +11,18 @@ namespace SpracheBlog
     {
         public string Path { get; set; }
         public Guid Id { get; set; }
+
+        public override string ToString()
+        {
+            if(Id != Guid.Empty)
+            {
+                return Id.ToString();
+            }
+            else
+            {
+                return Path;
+            }
+        }
     }
 
 }

@@ -39,8 +39,18 @@ namespace SpracheBlog
             ItemPath
             .XOr(ItemId).Token();
 
-        public static Parser<Field> Field =
+        public static Parser<string> QuotedFieldName =
+            from openQuote in Parse.Char('"')
+            from value in Parse.CharExcept('"').Many().Text()
+            from closeQuote in Parse.Char('"')
+            select value;
+
+        public static Parser<string> UnquotedFieldName =
             from name in Parse.CharExcept(new char[] { '=', ' ' }).Many().Text()
+            select name;
+
+        public static Parser<Field> Field =
+            from name in QuotedFieldName.XOr(UnquotedFieldName)
             from equalSign in Parse.Char('=').Token()
             from openQuote in Parse.Char('"')
             from value in Parse.CharExcept('"').Many().Text()
