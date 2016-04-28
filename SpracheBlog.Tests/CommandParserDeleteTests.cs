@@ -6,12 +6,12 @@ namespace SpracheBlog.Tests
 {
 
     [TestClass]
-    public class CommandDeleteTests
+    public class CommandParserDeleteTests
     {
         [TestMethod]
         public void DeleteParses()
         {
-            var result = Command.DeleteCommand.TryParse(@"delete \abc\def\x");
+            var result = CommandParser.DeleteCommand.TryParse(@"delete \abc\def\x");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
 

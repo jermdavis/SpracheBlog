@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SpracheBlog
 {
 
-    public class MoveCommand : Command
+    public class MoveCommand : CommandParser
     {
         public ItemIdenitfier Item { get; set; }
         public ItemIdenitfier NewLocation { get; set; }

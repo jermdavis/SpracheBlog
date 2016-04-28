@@ -8,7 +8,7 @@ using Sprache;
 namespace SpracheBlog
 {
 
-    public class Command
+    public class CommandParser
     {
         public static IEnumerable<char> InvalidNameCharacters = new List<char> { '\\', '/', ':', '?', '"', '<', '>', '|', '[', ']', ' ', '!' };
 
@@ -58,7 +58,7 @@ namespace SpracheBlog
             select new Field() { Name = name, Value = value };
 
         // create <template:id/path> named <name> under [<location:id/path> with <property="value">[,etc]]
-        public static Parser<Command> CreateCommand =
+        public static Parser<CommandParser> CreateCommand =
             from cmd in Parse.IgnoreCase("create").Token()
             from template in PathOrID
             from named in Parse.IgnoreCase("named").Token()
@@ -76,7 +76,7 @@ namespace SpracheBlog
             select new CreateCommand() { Template = template, Name = itemName, Location = location, Fields = fieldValues.GetOrElse(new List<Field>()) };
 
         // move <item:id/path> to <location:id/path>
-        public static Parser<Command> MoveCommand =
+        public static Parser<CommandParser> MoveCommand =
             from cmd in Parse.IgnoreCase("move").Token()
             from item in PathOrID
             from to in Parse.IgnoreCase("to").Token()
@@ -84,12 +84,12 @@ namespace SpracheBlog
             select new MoveCommand() { Item = item, NewLocation = newLocation };
 
         //delete <item:id/path>
-        public static Parser<Command> DeleteCommand =
+        public static Parser<CommandParser> DeleteCommand =
             from cmd in Parse.IgnoreCase("delete").Token()
             from item in PathOrID
             select new DeleteCommand() { Item = item };
 
-        public static Parser<Command> Any =
+        public static Parser<CommandParser> Any =
             CreateCommand
             .XOr(MoveCommand)
             .XOr(DeleteCommand);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SpracheBlog
 {
 
-    public class CreateCommand : Command
+    public class CreateCommand : CommandParser
     {
         public ItemIdenitfier Template { get; set; }
         public string Name { get; set; }

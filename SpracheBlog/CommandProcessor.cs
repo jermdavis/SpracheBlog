@@ -27,7 +27,7 @@ namespace SpracheBlog
                 return string.Empty;
             }
 
-            var result = Command.Any.TryParse(command);
+            var result = CommandParser.Any.TryParse(command);
 
             if(!result.WasSuccessful)
             {
@@ -37,7 +37,7 @@ namespace SpracheBlog
             return dispatchResult(result);
         }
 
-        private string dispatchResult(IResult<Command> result)
+        private string dispatchResult(IResult<CommandParser> result)
         {
             if (result.Value is DeleteCommand)
             {
