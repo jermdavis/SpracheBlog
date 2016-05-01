@@ -36,12 +36,15 @@ namespace SpracheBlog
 
             var item = folder.Add(Name, tid);
 
-            item.Editing.BeginEdit();
-            foreach (var field in Fields)
+            if (Fields != null)
             {
-                item[field.Name] = field.Value;
+                item.Editing.BeginEdit();
+                foreach (var field in Fields)
+                {
+                    item[field.Name] = field.Value;
+                }
+                item.Editing.EndEdit();
             }
-            item.Editing.EndEdit();
 
             return "Created " + item.Paths.Path;
         }
