@@ -6,12 +6,12 @@ namespace SpracheBlog.Tests
 {
 
     [TestClass]
-    public class CommandParserMoveTests
+    public class CommandTextParserMoveTests
     {
         [TestMethod]
         public void MoveParses()
         {
-            var result = CommandParser.MoveCommand.TryParse(@"move \abc\def to {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}");
+            var result = CommandTextParser.MoveCommand.TryParse(@"move \abc\def to {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
 
@@ -24,7 +24,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void BadMoveDoesNotParse()
         {
-            var result = CommandParser.MoveCommand.TryParse(@"move \abc\def ao {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}");
+            var result = CommandTextParser.MoveCommand.TryParse(@"move \abc\def ao {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}");
 
             Assert.IsFalse(result.WasSuccessful);
         }
@@ -32,7 +32,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void MoveFailsForInvalidPath()
         {
-            var result = CommandParser.MoveCommand.TryParse(@"move \abc!def to {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}");
+            var result = CommandTextParser.MoveCommand.TryParse(@"move \abc!def to {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}");
 
             Assert.IsFalse(result.WasSuccessful);
         }

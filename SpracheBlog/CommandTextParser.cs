@@ -8,7 +8,7 @@ using Sprache;
 namespace SpracheBlog
 {
 
-    public class CommandParser
+    public class CommandTextParser
     {
         public static IEnumerable<char> InvalidNameCharacters = new List<char> { '\\', '/', ':', '?', '"', '<', '>', '|', '[', ']', ' ', '!' };
 

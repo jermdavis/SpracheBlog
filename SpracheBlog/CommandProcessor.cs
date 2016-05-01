@@ -22,7 +22,7 @@ namespace SpracheBlog
                 return string.Empty;
             }
 
-            var result = CommandParser.Any.TryParse(command);
+            var result = CommandTextParser.Any.TryParse(command);
 
             if(!result.WasSuccessful)
             {

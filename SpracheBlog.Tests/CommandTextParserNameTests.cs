@@ -6,12 +6,12 @@ namespace SpracheBlog.Tests
 {
 
     [TestClass]
-    public class CommandParserNameTests
+    public class CommandTextParserNameTests
     {
         [TestMethod]
         public void ValidNameParses()
         {
-            var result = CommandParser.ItemName.TryParse(" Hello ");
+            var result = CommandTextParser.ItemName.TryParse(" Hello ");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual("Hello", result.Value);

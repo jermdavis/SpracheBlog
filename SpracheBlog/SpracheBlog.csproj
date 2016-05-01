@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CollectionExtensions.cs" />
-    <Compile Include="CommandParser.cs" />
+    <Compile Include="CommandTextParser.cs" />
     <Compile Include="CommandProcessor.cs" />
     <Compile Include="CreateCommand.cs" />
     <Compile Include="DeleteCommand.cs" />

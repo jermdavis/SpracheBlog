@@ -6,13 +6,13 @@ namespace SpracheBlog.Tests
 {
 
     [TestClass]
-    public class CommandParserItemIDTests
+    public class CommandTextParserItemIDTests
     {
         [TestMethod]
         public void ItemIDParsesValidID()
         {
             string guid = "{582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}";
-            var result = CommandParser.ItemId.TryParse(guid);
+            var result = CommandTextParser.ItemId.TryParse(guid);
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual(Guid.Parse(guid), result.Value.Id);
@@ -23,7 +23,7 @@ namespace SpracheBlog.Tests
         public void ItemIDFailsForInvalidID()
         {
             string guid = "{582ccf36!b6e4-49f0-9c35-2d8e40b5ef3d}";
-            var result = CommandParser.ItemId.TryParse(guid);
+            var result = CommandTextParser.ItemId.TryParse(guid);
 
             Assert.IsFalse(result.WasSuccessful);
         }
@@ -33,7 +33,7 @@ namespace SpracheBlog.Tests
         {
             string path = @"\alpha\bravo";
 
-            var result = CommandParser.ItemPath.TryParse(path);
+            var result = CommandTextParser.ItemPath.TryParse(path);
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual(path.Replace('\\', '/'), result.Value.Path);
@@ -45,7 +45,7 @@ namespace SpracheBlog.Tests
         {
             string path = @"/alpha/bravo";
 
-            var result = CommandParser.ItemPath.TryParse(path + "\\");
+            var result = CommandTextParser.ItemPath.TryParse(path + "\\");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual(path, result.Value.Path);
@@ -61,7 +61,7 @@ namespace SpracheBlog.Tests
             // if some other parseable data follows after the bad path - like the whitespace here.
             // Without the Then() clause the parse would work, but not consume the "!bravo" bit 
             // which is supposed to be the error...
-            var result = CommandParser.ItemPath
+            var result = CommandTextParser.ItemPath
                 .Then(_ => Parse.WhiteSpace)
                 .TryParse(path);
 

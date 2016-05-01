@@ -8,12 +8,12 @@ namespace SpracheBlog.Tests
 {
     
     [TestClass]
-    public class CommandParserAnyTests
+    public class CommandTextParserAnyTests
     {
         [TestMethod]
         public void AnyCanParseCreate()
         {
-            var result = CommandParser.Any.TryParse("create \\12 named alpha under {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d} with a=\"2\"");
+            var result = CommandTextParser.Any.TryParse("create \\12 named alpha under {582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d} with a=\"2\"");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.IsInstanceOfType(result.Value, typeof(CreateCommand));
@@ -30,7 +30,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void AnyCanParseMove()
         {
-            var result = CommandParser.Any.TryParse("MOVE {cf2d0f82-8504-4b7e-a8c4-60658be8688b} to /sitecore/content\\home");
+            var result = CommandTextParser.Any.TryParse("MOVE {cf2d0f82-8504-4b7e-a8c4-60658be8688b} to /sitecore/content\\home");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.IsInstanceOfType(result.Value, typeof(MoveCommand));
@@ -43,7 +43,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void AnyCanParseDelete()
         {
-            var result = CommandParser.Any.TryParse("DelEte /a\\b/c");
+            var result = CommandTextParser.Any.TryParse("DelEte /a\\b/c");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.IsInstanceOfType(result.Value, typeof(DeleteCommand));

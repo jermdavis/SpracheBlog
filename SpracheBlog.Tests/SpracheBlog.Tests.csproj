@@ -75,16 +75,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CommandParserCreateTests.cs" />
-    <Compile Include="CommandParserMoveTests.cs" />
-    <Compile Include="CommandParserDeleteTests.cs" />
-    <Compile Include="CommandParserFieldTests.cs" />
-    <Compile Include="CommandParserNameTests.cs" />
-    <Compile Include="CommandParserAnyTests.cs" />
-    <Compile Include="CommandPathOrIDTests.cs" />
+    <Compile Include="CommandTextParserCreateTests.cs" />
+    <Compile Include="CommandTextParserMoveTests.cs" />
+    <Compile Include="CommandTextParserDeleteTests.cs" />
+    <Compile Include="CommandTextParserFieldTests.cs" />
+    <Compile Include="CommandTextParserNameTests.cs" />
+    <Compile Include="CommandTextParserAnyTests.cs" />
+    <Compile Include="CommandTextParserPathOrIDTests.cs" />
     <Compile Include="CommandProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CommandParserItemIDTests.cs" />
+    <Compile Include="CommandTextParserItemIDTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpracheBlog\SpracheBlog.csproj">

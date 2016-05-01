@@ -6,12 +6,12 @@ namespace SpracheBlog.Tests
 {
 
     [TestClass]
-    public class CommandParserFieldTests
+    public class CommandTextParserFieldTests
     {
         [TestMethod]
         public void ValidFieldParses()
         {
-            var result = CommandParser.Field.TryParse("alpha=\"one\"");
+            var result = CommandTextParser.Field.TryParse("alpha=\"one\"");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual("alpha", result.Value.Name);
@@ -21,7 +21,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void ValidFieldWithWhitespaceParses()
         {
-            var result = CommandParser.Field.TryParse("alpha = \"one\"");
+            var result = CommandTextParser.Field.TryParse("alpha = \"one\"");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual("alpha", result.Value.Name);
@@ -31,7 +31,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void FieldWithMissingQuoteFails()
         {
-            var result = CommandParser.Field.TryParse("alpha=\"one");
+            var result = CommandTextParser.Field.TryParse("alpha=\"one");
 
             Assert.IsFalse(result.WasSuccessful);
         }
@@ -39,7 +39,7 @@ namespace SpracheBlog.Tests
         [TestMethod]
         public void FieldWithQuotedNameParses()
         {
-            var result = CommandParser.Field.TryParse("\"Display name\"=\"one\"");
+            var result = CommandTextParser.Field.TryParse("\"Display name\"=\"one\"");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual("Display name", result.Value.Name);

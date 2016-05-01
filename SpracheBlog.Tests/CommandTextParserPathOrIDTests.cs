@@ -6,12 +6,12 @@ namespace SpracheBlog.Tests
 {
 
     [TestClass]
-    public class CommandPathOrIDTests
+    public class CommandTextParserPathOrIDTests
     {
         [TestMethod]
         public void PathOrIDParsesPath()
         {
-            var result = CommandParser.PathOrID.TryParse(" \\test\\path  ");
+            var result = CommandTextParser.PathOrID.TryParse(" \\test\\path  ");
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual("/test/path", result.Value.Path);
@@ -22,7 +22,7 @@ namespace SpracheBlog.Tests
         public void PathOrIDParsesID()
         {
             string id = "{582ccf36-b6e4-49f0-9c35-2d8e40b5ef3d}";
-            var result = CommandParser.PathOrID.TryParse(id);
+            var result = CommandTextParser.PathOrID.TryParse(id);
 
             Assert.IsTrue(result.WasSuccessful, result.Message);
             Assert.AreEqual(Guid.Parse(id), result.Value.Id);
