@@ -56,6 +56,7 @@
     <Compile Include="CreateCommand.cs" />
     <Compile Include="DeleteCommand.cs" />
     <Compile Include="Field.cs" />
+    <Compile Include="ICommand.cs" />
     <Compile Include="ItemIdenitfier.cs" />
     <Compile Include="MoveCommand.cs" />
     <Compile Include="Program.cs" />
