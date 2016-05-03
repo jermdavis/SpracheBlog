@@ -9,7 +9,7 @@ namespace SpracheBlog.Tests
     public class CommandTextParserDeleteTests
     {
         [TestMethod]
-        public void DeleteParses()
+        public void DeleteParsesWithPath()
         {
             var result = CommandTextParser.DeleteCommand.TryParse(@"delete \abc\def\x");
 
@@ -18,6 +18,18 @@ namespace SpracheBlog.Tests
             var cmd = result.Value as DeleteCommand;
 
             Assert.AreEqual("/abc/def/x", cmd.Item.Path);
+        }
+
+        [TestMethod]
+        public void DeleteParsesWithID()
+        {
+            var result = CommandTextParser.DeleteCommand.TryParse(@"delete {7f700de5-9f24-4a30-a4f7-ed3421abb563}");
+
+            Assert.IsTrue(result.WasSuccessful, result.Message);
+
+            var cmd = result.Value as DeleteCommand;
+
+            Assert.AreEqual(Guid.Parse("{7f700de5-9f24-4a30-a4f7-ed3421abb563}"), cmd.Item.Id);
         }
     }
 

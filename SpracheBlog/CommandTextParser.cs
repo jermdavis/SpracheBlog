@@ -8,9 +8,11 @@ using Sprache;
 namespace SpracheBlog
 {
 
-    public class CommandTextParser
+    public static class CommandTextParser
     {
-        public static IEnumerable<char> InvalidNameCharacters = new List<char> { '\\', '/', ':', '?', '"', '<', '>', '|', '[', ']', ' ', '!' };
+        public static IEnumerable<char> InvalidNameCharacters = 
+            new List<char> { '\\', '/', ':', '?', '"', '<', '>', '|', '[', ']', ' ',
+                '!', '(', ')', '%', '#', '@', '!', '£', '$', '^', '&', ';', '~' };
 
         public static Parser<string> ItemName =
             Parse.CharExcept(InvalidNameCharacters).AtLeastOnce().Text().Token();
@@ -37,7 +39,8 @@ namespace SpracheBlog
 
         public static Parser<ItemIdenitfier> PathOrID =
             ItemPath
-            .XOr(ItemId).Token();
+            .XOr(ItemId)
+            .Token();
 
         public static Parser<string> QuotedFieldName =
             from openQuote in Parse.Char('"')
