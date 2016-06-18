@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpracheBlog.Tests", "Sprach
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EA19EBD-9A60-407E-8637-F9B0F7F8E085}"
 	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
 		SitecoreReferences\README.txt = SitecoreReferences\README.txt
 	EndProjectSection
 EndProject

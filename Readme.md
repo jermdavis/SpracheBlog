@@ -1,0 +1,1 @@
+An example of text parsing using the Sprache framework for a Sitecore utility, and testing the resulting code with Sitecore.FakeDB.
